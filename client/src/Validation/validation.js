@@ -463,7 +463,7 @@ const notificationValidation = joi.object({
 		.messages({
 			"string.empty": "Notification type is required",
 			"any.required": "Notification type is required",
-			"any.only": "Notification type must be email, webhook, or pager_duty",
+			"any.only": "Notification type must be email, webhook, ntfy or pager_duty",
 		}),
 
 	address: joi.when("type", {
@@ -499,6 +499,10 @@ const notificationValidation = joi.object({
 				is: "matrix",
 				then: joi.string().allow("").optional(),
 			},
+			{
+				is: "ntfy",
+				then: joi.string().allow("").optional(),
+			},
 		],
 	}),
 
@@ -529,6 +533,25 @@ const notificationValidation = joi.object({
 		}),
 		otherwise: joi.string().allow("").optional(),
 	}),
+
+	ntfyServerUrl: joi.when("type", {
+		is: "ntfy",
+		then: joi.string().uri().required().messages({
+				"string.empty": "ntfy server URL cannot be empty",
+				"any.required": "ntfy server URL is required",
+				"string.uri": "Please enter a valid ntfy server URL",
+		}),
+		otherwise: joi.string().allow("").optional(),
+    }),
+
+    ntfyTopic: joi.when("type", {
+		is: "ntfy",
+		then: joi.string().required().messages({
+				"string.empty": "ntfy topic cannot be empty",
+				"any.required": "ntfy topic is required",
+		}),
+		otherwise: joi.string().allow("").optional(),
+    }),
 });
 
 const editUserValidation = joi.object({

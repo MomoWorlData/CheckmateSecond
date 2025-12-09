@@ -5,6 +5,7 @@ export const NOTIFICATION_TYPES = [
 	{ _id: 4, name: "Webhook", value: "webhook" },
 	{ _id: 5, name: "Discord", value: "discord" },
 	{ _id: 6, name: "Matrix", value: "matrix" },
+	{ _id: 7, name: "ntfy", value: "ntfy" },
 ];
 
 export const TITLE_MAP = {
@@ -23,6 +24,7 @@ export const DESCRIPTION_MAP = {
 	webhook: "createNotifications.webhookSettings.description",
 	discord: "createNotifications.discordSettings.description",
 	matrix: "createNotifications.matrixSettings.description",
+	ntfy: "createNotifications.ntfySettings.description",
 };
 
 export const LABEL_MAP = {
@@ -32,6 +34,7 @@ export const LABEL_MAP = {
 	webhook: "createNotifications.webhookSettings.webhookLabel",
 	discord: "createNotifications.discordSettings.webhookLabel",
 	matrix: "createNotifications.matrixSettings.homeserverLabel",
+	ntfy: "createNotifications.ntfySettings.serverLabel",
 };
 
 export const PLACEHOLDER_MAP = {
@@ -41,4 +44,5 @@ export const PLACEHOLDER_MAP = {
 	webhook: "createNotifications.webhookSettings.webhookPlaceholder",
 	discord: "createNotifications.discordSettings.webhookPlaceholder",
 	matrix: "createNotifications.matrixSettings.homeserverPlaceholder",
+	ntfy: "createNotifications.ntfySettings.serverPlaceholder",
 };

@@ -517,6 +517,41 @@ class NetworkService {
 		}
 	}
 
+	async requestNtfy({ serverUrl, topic, message }) {
+		try {
+				const trimmedBaseUrl = serverUrl.endsWith("/") ? serverUrl.slice(0, -1) : serverUrl;
+				const endpoint = `${trimmedBaseUrl}/${topic}`;
+
+				const response = await this.axios.post(endpoint, message, {
+						headers: {
+								"Content-Type": "text/plain",
+						},
+				});
+
+				return {
+						type: "ntfy",
+						status: true,
+						code: response.status,
+						message: "Successfully sent ntfy notification",
+						payload: response.data,
+				};
+		} catch (error) {
+				this.logger.warn({
+						message: error.message,
+						service: this.SERVICE_NAME,
+						method: "requestNtfy",
+				});
+
+				return {
+						type: "ntfy",
+						status: false,
+						code: error.response?.status || this.NETWORK_ERROR,
+						message: "Failed to send ntfy notification",
+						payload: error.response?.data,
+					};
+			}
+    }
+
 	async requestPagerDuty({ message, routingKey, monitorUrl }) {
 		try {
 			const response = await this.axios.post(`https://events.pagerduty.com/v2/enqueue`, {

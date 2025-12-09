@@ -84,6 +84,15 @@
 			"urlPlaceholder": "https://your-server.com/webhook",
 			"urlRequired": "Webhook URL is required"
 		},
+		"ntfy": {
+			"label": "ntfy",
+			"description": "Send push notifications to your ntfy server by providing the server URL and topic.",
+			"serverLabel": "ntfy server URL",
+			"serverPlaceholder": "https://ntfy.sh",
+			"topicLabel": "Topic",
+			"topicPlaceholder": "checkmate-alerts",
+			"fieldsRequired": "ntfy server URL and topic are required"
+        },
 		"testNotificationDevelop": "Test notification 2",
 		"integrationButton": "Notification Integration",
 		"testSuccess": "Test notification sent successfully!",
@@ -749,6 +758,14 @@
 			"webhookLabel": "Webhook URL",
 			"webhookPlaceholder": "https://your-server.com/webhook"
 		},
+		"ntfySettings": {
+			"title": "ntfy",
+			"description": "Configure your ntfy integration here",
+			"serverLabel": "ntfy server URL",
+			"serverPlaceholder": "https://ntfy.sh",
+			"topicLabel": "Topic",
+			"topicPlaceholder": "checkmate-alerts"
+        },
 		"testNotification": "Test notification",
 		"dialogDeleteTitle": "Are you sure you want to delete this notification?",
 		"dialogDeleteConfirm": "Delete"

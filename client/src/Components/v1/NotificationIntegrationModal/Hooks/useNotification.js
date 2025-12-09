@@ -9,6 +9,7 @@ const NOTIFICATION_TYPES = {
 	DISCORD: "discord",
 	TELEGRAM: "telegram",
 	WEBHOOK: "webhook",
+	NTFY: "ntfy",
 };
 
 // Define constants for field IDs
@@ -17,6 +18,8 @@ const FIELD_IDS = {
 	TOKEN: "token",
 	CHAT_ID: "chatId",
 	URL: "url",
+	SERVER: "server",
+    TOPIC: "topic",
 };
 
 /**
@@ -81,6 +84,21 @@ const useNotifications = () => {
 				}
 				break;
 
+			case NOTIFICATION_TYPES.NTFY:
+				notification.ntfyServerUrl = config.server;
+				notification.ntfyTopic = config.topic;
+
+				if (
+						typeof notification.ntfyServerUrl === "undefined" ||
+						notification.ntfyServerUrl === "" ||
+						typeof notification.ntfyTopic === "undefined" ||
+						notification.ntfyTopic === ""
+				) {
+						isValid = false;
+						errorMessage = t("notifications.ntfy.fieldsRequired");
+				}
+				break;
+
 			default:
 				isValid = false;
 				errorMessage = t("notifications.unsupportedType");
@@ -97,10 +115,7 @@ const useNotifications = () => {
 		}
 
 		try {
-			const response = await networkService.testNotification({
-				platform: type,
-				payload: payload,
-			});
+			const response = await networkService.testNotification({notification});
 
 			if (response.data.success === true) {
 				createToast({

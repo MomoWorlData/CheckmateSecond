@@ -575,11 +575,11 @@ const createNotificationBodyValidation = joi.object({
 		"any.required": "Notification name is required",
 	}),
 
-	type: joi.string().valid("email", "webhook", "slack", "discord", "pager_duty", "matrix").required().messages({
+	type: joi.string().valid("email", "webhook", "slack", "discord", "pager_duty", "matrix", "ntfy").required().messages({
 		"string.empty": "Notification type is required",
 		"any.required": "Notification type is required",
-		"any.only": "Notification type must be email, webhook, slack, discord, pager_duty, or matrix",
-	}),
+		"any.only": "Notification type must be email, webhook, slack, discord, pager_duty, matrix, or ntfy",
+    }),
 
 	address: joi.when("type", {
 		switch: [
@@ -610,6 +610,10 @@ const createNotificationBodyValidation = joi.object({
 				is: "matrix",
 				then: joi.string().allow("").optional(),
 			},
+			{
+				is: "ntfy",
+				then: joi.string().allow("").optional(),
+			},
 		],
 	}),
 
@@ -637,6 +641,24 @@ const createNotificationBodyValidation = joi.object({
 		then: joi.string().required().messages({
 			"string.empty": "Access Token cannot be empty",
 			"any.required": "Access Token is required",
+		}),
+		otherwise: joi.string().allow("").optional(),
+	}),
+	ntfyServerUrl: joi.when("type", {
+		is: "ntfy",
+		then: joi.string().uri().required().messages({
+				"string.empty": "ntfy server URL cannot be empty",
+				"any.required": "ntfy server URL is required",
+				"string.uri": "Please enter a valid ntfy server URL",
+		}),
+		otherwise: joi.string().allow("").optional(),
+    }),
+
+	ntfyTopic: joi.when("type", {
+		is: "ntfy",
+		then: joi.string().required().messages({
+				"string.empty": "ntfy topic cannot be empty",
+				"any.required": "ntfy topic is required",
 		}),
 		otherwise: joi.string().allow("").optional(),
 	}),

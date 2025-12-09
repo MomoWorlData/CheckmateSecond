@@ -57,6 +57,8 @@ const CreateNotifications = () => {
 		notificationName: "",
 		address: "",
 		type: NOTIFICATION_TYPES[0]._id,
+		ntfyServerUrl: "",
+        ntfyTopic: "",
 	});
 	const [errors, setErrors] = useState({});
 	const { t } = useTranslation();
@@ -258,19 +260,44 @@ const CreateNotifications = () => {
 									helperText={errors["accessToken"]}
 								/>
 							</>
-						) : (
-							<TextInput
-								label={t(LABEL_MAP[type])}
-								name="address"
-								placeholder={t(PLACEHOLDER_MAP[type])}
-								value={notification.address}
-								onChange={onChange}
-								error={Boolean(errors.address)}
-								helperText={errors["address"]}
-							/>
-						)}
-					</Stack>
+						) : type === "ntfy" ? (
+                                 <>
+										<TextInput
+												label={t("createNotifications.ntfySettings.serverLabel")}
+												name="ntfyServerUrl"
+												placeholder={t(
+														"createNotifications.ntfySettings.serverPlaceholder"
+												)}
+												value={notification.ntfyServerUrl}
+												onChange={onChange}
+												error={Boolean(errors.ntfyServerUrl)}
+												helperText={errors["ntfyServerUrl"]}
+										/>
+										<TextInput
+												label={t("createNotifications.ntfySettings.topicLabel")}
+												name="ntfyTopic"
+												placeholder={t("createNotifications.ntfySettings.topicPlaceholder")}
+												value={notification.ntfyTopic}
+												onChange={onChange}
+												error={Boolean(errors.ntfyTopic)}
+												helperText={errors["ntfyTopic"]}
+										/>
+									</>
+								) : (
+										<TextInput
+												label={t(LABEL_MAP[type])}
+												name="address"
+												placeholder={t(PLACEHOLDER_MAP[type])}
+												value={notification.address}
+												onChange={onChange}
+												error={Boolean(errors.address)}
+												helperText={errors["address"]}
+										/>
+								)}
+						</Stack>
 				</ConfigBox>{" "}
+										
+							
 				<Stack
 					direction="row"
 					justifyContent="flex-end"

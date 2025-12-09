@@ -55,6 +55,16 @@ class NotificationService {
 			const success = await matrix.send({ friendlyName, homeserverUrl, accessToken, roomId, message, monitorName });
 			return success;
 		}
+		if (type === "ntfy") {
+			const { ntfyServerUrl, ntfyTopic } = notification;
+			const message = subject ? `${subject}: ${content}` : content;
+			const response = await this.networkService.requestNtfy({
+					serverUrl: ntfyServerUrl,
+					topic: ntfyTopic,
+					message,
+			});
+			return response.status;
+    	}
 	};
 
 	async handleNotifications(networkResponse) {

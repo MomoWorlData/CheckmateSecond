@@ -16,7 +16,7 @@ const NotificationSchema = mongoose.Schema(
 		},
 		type: {
 			type: String,
-			enum: ["email", "slack", "discord", "webhook", "pager_duty", "matrix"],
+			enum: ["email", "slack", "discord", "webhook", "pager_duty", "matrix", "ntfy"],
 		},
 		notificationName: {
 			type: String,
@@ -36,6 +36,12 @@ const NotificationSchema = mongoose.Schema(
 			type: String,
 		},
 		accessToken: {
+			type: String,
+		},
+		ntfyServerUrl: {
+			type: String,
+		},
+		ntfyTopic: {
 			type: String,
 		},
 	},

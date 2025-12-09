@@ -729,6 +729,8 @@ class NetworkService {
 	 * @returns {Promise<AxiosResponse>} The response from the axios POST request.
 	 */
 	async testNotification(config) {
+		const notification = config?.notification ?? config;
+
 		return this.axiosInstance.post("/notifications/test", config.notification, {
 			headers: {
 				"Content-Type": "application/json",

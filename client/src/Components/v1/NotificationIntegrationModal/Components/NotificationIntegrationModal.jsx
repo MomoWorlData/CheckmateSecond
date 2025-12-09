@@ -21,17 +21,20 @@ import useNotifications from "../Hooks/useNotification.js";
 // Define constants for notification types to avoid magic values
 const NOTIFICATION_TYPES = {
 	SLACK: "slack",
-	DISCORD: "discord",
-	TELEGRAM: "telegram",
-	WEBHOOK: "webhook",
+    DISCORD: "discord",
+    TELEGRAM: "telegram",
+    WEBHOOK: "webhook",
+    NTFY: "ntfy",
 };
 
 // Define constants for field IDs
 const FIELD_IDS = {
 	WEBHOOK: "webhook",
-	TOKEN: "token",
+    TOKEN: "token",
 	CHAT_ID: "chatId",
-	URL: "url",
+    URL: "url",
+    SERVER: "server",
+    TOPIC: "topic",
 };
 
 const NotificationIntegrationModal = ({
@@ -124,7 +127,29 @@ const NotificationIntegrationModal = ({
 				},
 			],
 		},
+		{
+			id: NOTIFICATION_TYPES.NTFY,
+			label: t("notifications.ntfy.label"),
+			description: t("notifications.ntfy.description"),
+			fields: [
+					{
+							id: FIELD_IDS.SERVER,
+							label: t("notifications.ntfy.serverLabel"),
+							placeholder: t("notifications.ntfy.serverPlaceholder"),
+							type: "text",
+					},
+					{
+							id: FIELD_IDS.TOPIC,
+							label: t("notifications.ntfy.topicLabel"),
+							placeholder: t("notifications.ntfy.topicPlaceholder"),
+							type: "text",
+					},
+			],
+		},
 	];
+
+
+	
 
 	// Use provided notification types or default to our translated ones
 	const activeNotificationTypes = notificationTypes || DEFAULT_NOTIFICATION_TYPES;
@@ -188,6 +213,16 @@ const NotificationIntegrationModal = ({
 								if (notification.config.webhookUrl) {
 									values[getFieldKey(platform, FIELD_IDS.URL)] =
 										notification.config.webhookUrl;
+								}
+								break;
+							case NOTIFICATION_TYPES.NTFY:
+								if (notification.config.serverUrl) {
+										values[getFieldKey(platform, FIELD_IDS.SERVER)] =
+												notification.config.serverUrl;
+								}
+								if (notification.config.topic) {
+										values[getFieldKey(platform, FIELD_IDS.TOPIC)] =
+												notification.config.topic;
 								}
 								break;
 						}
@@ -287,6 +322,12 @@ const NotificationIntegrationModal = ({
 						notificationObject.config.webhookUrl =
 							integrations[getFieldKey(type.id, "url")];
 						break;
+					case NOTIFICATION_TYPES.NTFY:
+                        notificationObject.config.serverUrl = 
+							integrations[getFieldKey(type.id, "server")];
+                        notificationObject.config.topic = 
+							integrations[getFieldKey(type.id, "topic")];
+                        break;
 				}
 
 				filteredNotifications.push(notificationObject);

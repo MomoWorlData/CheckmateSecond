@@ -103,6 +103,8 @@ const useGetNotificationById = (id, setNotification) => {
 				address: notification?.address,
 				notificationName: notification?.notificationName,
 				type: NOTIFICATION_TYPES.find((type) => type.value === notification?.type)?._id,
+				ntfyServerUrl: notification?.ntfyServerUrl,
+                tfyTopic: notification?.ntfyTopic,
 			};
 
 			setNotification(notificationData);
